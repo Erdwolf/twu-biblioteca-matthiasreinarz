@@ -52,6 +52,7 @@ public class ExampleTest {
         s.nextLine();
         assertEquals("0) Quit", s.nextLine());
         assertEquals("1) List books", s.nextLine());
+        assertEquals("2) Checkout book", s.nextLine());
         assertEquals(">", s.next(">"));
     }
 
@@ -61,7 +62,7 @@ public class ExampleTest {
         s.skip("> ");
         provideInput("1\n");
         assertEquals("Real World Haskell | O'Sullivan, Goerzen, and Stuart | 2009", s.nextLine());
-        assertEquals("Java Persistence with Hibernate | Bauer, and King | 2007 ", s.nextLine());
+        assertEquals("Java Persistence with Hibernate | Bauer, and King | 2007", s.nextLine());
     }
 
 
@@ -69,7 +70,7 @@ public class ExampleTest {
     public void testInvalidMenuOption() throws IOException {
         while (! s.hasNext(">")) { s.nextLine(); }
         s.skip("> ");
-        provideInput("2\n");
+        provideInput("123\n");
         assertEquals("Select a valid option!", s.nextLine());
     }
 
@@ -77,7 +78,7 @@ public class ExampleTest {
     public void testInvalidMenuOption_ReEnterChoice() throws IOException {
         while (! s.hasNext(">")) { s.nextLine(); }
         s.skip("> ");
-        provideInput("2\n");
+        provideInput("123\n");
         s.nextLine();
         testListOfBooks();
     }
@@ -89,6 +90,21 @@ public class ExampleTest {
         provideInput("0\n");
         assertFalse(s.hasNext());
         assertFalse(t.isAlive());
+    }
+
+    @Test
+    public void testCheckoutBook() throws IOException {
+        while (! s.hasNext(">")) { s.nextLine(); }
+        s.skip("> ");
+        provideInput("2\n");
+        s.useDelimiter(">");
+        s.next("Name of book");
+        s.reset();
+        s.skip("> ");
+        provideInput("Real World Haskell\n");
+        s.skip("> ");
+        provideInput("1\n");
+        assertEquals("Java Persistence with Hibernate | Bauer, and King | 2007", s.nextLine());
     }
 
 }
