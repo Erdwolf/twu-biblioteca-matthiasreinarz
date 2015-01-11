@@ -53,6 +53,7 @@ public class ExampleTest {
         assertEquals("0) Quit", s.nextLine());
         assertEquals("1) List books", s.nextLine());
         assertEquals("2) Checkout book", s.nextLine());
+        assertEquals("3) Return book", s.nextLine());
         assertEquals(">", s.next(">"));
     }
 
@@ -132,6 +133,49 @@ public class ExampleTest {
         s.skip("> ");
         provideInput("Real World Haskell\n");
         assertEquals("That book is not available.", s.nextLine());
+    }
+
+    @Test
+    public void testReturnBookAndSuccessfulReturn() throws IOException {
+        testCheckoutBookAndSuccessfulCheckout();
+        s.skip("> ");
+        provideInput("3\n");
+        s.useDelimiter(">");
+        s.next("Name of book");
+        s.reset();
+        s.skip("> ");
+        provideInput("Real World Haskell\n");
+        assertEquals("Thank you for returning the book.", s.nextLine());
+        s.skip("> ");
+        provideInput("1\n");
+        assertEquals("Real World Haskell | O'Sullivan, Goerzen, and Stuart | 2009", s.nextLine());
+        assertEquals("Java Persistence with Hibernate | Bauer, and King | 2007", s.nextLine());
+    }
+
+    @Test
+    public void testUnsuccessfulReturn_BogusBook() throws IOException {
+        while (! s.hasNext(">")) { s.nextLine(); }
+        s.skip("> ");
+        provideInput("3\n");
+        s.useDelimiter(">");
+        s.next("Name of book");
+        s.reset();
+        s.skip("> ");
+        provideInput("Design Patterns\n");
+        assertEquals("That is not a valid book to return.", s.nextLine());
+    }
+
+    @Test
+    public void testUnsuccessfulReturn_AvailableBook() throws IOException {
+        while (! s.hasNext(">")) { s.nextLine(); }
+        s.skip("> ");
+        provideInput("3\n");
+        s.useDelimiter(">");
+        s.next("Name of book");
+        s.reset();
+        s.skip("> ");
+        provideInput("Real World Haskell\n");
+        assertEquals("That is not a valid book to return.", s.nextLine());
     }
 
 }

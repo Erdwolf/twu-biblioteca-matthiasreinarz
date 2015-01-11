@@ -28,6 +28,7 @@ public class BibliotecaApp {
         out.println("0) Quit");
         out.println("1) List books");
         out.println("2) Checkout book");
+        out.println("3) Return book");
         boolean done = false;
         while(! done) {
             out.print("> ");
@@ -51,6 +52,18 @@ public class BibliotecaApp {
                 } else {
                     checkedOutBooks.add(book);
                     out.println("Thank you! Enjoy the book");
+                }
+            } else if (menuOption == 3) {
+                out.print("Name of book> ");
+                in.useDelimiter("\\n");
+                String name = in.next();
+                in.reset();
+                Book book = findBookByName(name);
+                if (book == null || ! checkedOutBooks.contains(book)) {
+                    out.println("That is not a valid book to return.");
+                } else {
+                    checkedOutBooks.remove(book);
+                    out.println("Thank you for returning the book.");
                 }
             } else {
                 out.println("Select a valid option!");
