@@ -29,8 +29,8 @@ public class ExampleTest {
     @Test
     public void testListOfBooks() {
         s.nextLine();
-        assertEquals("Real World Haskell", s.nextLine());
-        assertEquals("Java Persistence with Hibernate", s.nextLine());
+        assertEquals("Real World Haskell | O'Sullivan, Goerzen, and Stuart | 2009", s.nextLine());
+        assertEquals("Java Persistence with Hibernate | Bauer, and King | 2007 ", s.nextLine());
     }
 
 }

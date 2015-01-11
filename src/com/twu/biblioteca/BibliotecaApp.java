@@ -12,8 +12,8 @@ public class BibliotecaApp {
 
     public void run() {
         out.println("Welcome to Biblioteca!");
-        out.println("Real World Haskell");
-        out.println("Java Persistence with Hibernate");
+        out.println("Real World Haskell | O'Sullivan, Goerzen, and Stuart | 2009");
+        out.println("Java Persistence with Hibernate | Bauer, and King | 2007 ");
     }
 
     public static void main(String[] args) {
