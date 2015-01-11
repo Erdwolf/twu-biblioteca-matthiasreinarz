@@ -8,18 +8,20 @@ import java.io.*;
 import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class ExampleTest {
 
     private Scanner s;
     private Writer w;
+    private Thread t;
 
     @Before
     public void captureOutput() throws IOException {
         final PipedOutputStream pipeIn  = new PipedOutputStream();
         final PipedOutputStream pipeOut = new PipedOutputStream();
 
-        new Thread(new Runnable() {
+        t = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -28,7 +30,8 @@ public class ExampleTest {
                     throw new RuntimeException(e);
                 }
             }
-        }).start();
+        });
+        t.start();
 
         w = new OutputStreamWriter(pipeIn);
         s = new Scanner(new PipedInputStream(pipeOut));
@@ -47,6 +50,7 @@ public class ExampleTest {
     @Test
     public void testMainMenu() {
         s.nextLine();
+        assertEquals("0) Quit", s.nextLine());
         assertEquals("1) List books", s.nextLine());
         assertEquals(">", s.next(">"));
     }
@@ -76,6 +80,15 @@ public class ExampleTest {
         provideInput("2\n");
         s.nextLine();
         testListOfBooks();
+    }
+
+    @Test
+    public void testQuit() throws IOException {
+        while (! s.hasNext(">")) { s.nextLine(); }
+        s.skip("> ");
+        provideInput("0\n");
+        assertFalse(s.hasNext());
+        assertFalse(t.isAlive());
     }
 
 }

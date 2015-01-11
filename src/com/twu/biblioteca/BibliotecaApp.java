@@ -16,11 +16,15 @@ public class BibliotecaApp {
 
     public void run() {
         out.println("Welcome to Biblioteca!");
+        out.println("0) Quit");
         out.println("1) List books");
-        while(true) {
+        boolean done = false;
+        while(! done) {
             out.print("> ");
             int menuOption = in.nextInt();
-            if (menuOption == 1) {
+            if (menuOption == 0) {
+                done = true;
+            } else if (menuOption == 1) {
                 out.println("Real World Haskell | O'Sullivan, Goerzen, and Stuart | 2009");
                 out.println("Java Persistence with Hibernate | Bauer, and King | 2007 ");
             } else {
