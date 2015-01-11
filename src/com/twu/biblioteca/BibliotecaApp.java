@@ -47,6 +47,7 @@ public class BibliotecaApp {
                 in.reset();
                 Book book = findBookByName(name);
                 checkedOutBooks.add(book);
+                out.println("Thank you! Enjoy the book");
             } else {
                 out.println("Select a valid option!");
             }

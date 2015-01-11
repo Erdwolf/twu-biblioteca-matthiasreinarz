@@ -93,7 +93,7 @@ public class ExampleTest {
     }
 
     @Test
-    public void testCheckoutBook() throws IOException {
+    public void testCheckoutBookAndSuccessfulCheckout() throws IOException {
         while (! s.hasNext(">")) { s.nextLine(); }
         s.skip("> ");
         provideInput("2\n");
@@ -102,6 +102,7 @@ public class ExampleTest {
         s.reset();
         s.skip("> ");
         provideInput("Real World Haskell\n");
+        assertEquals("Thank you! Enjoy the book", s.nextLine());
         s.skip("> ");
         provideInput("1\n");
         assertEquals("Java Persistence with Hibernate | Bauer, and King | 2007", s.nextLine());
