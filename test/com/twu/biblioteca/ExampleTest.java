@@ -60,4 +60,22 @@ public class ExampleTest {
         assertEquals("Java Persistence with Hibernate | Bauer, and King | 2007 ", s.nextLine());
     }
 
+
+    @Test
+    public void testInvalidMenuOption() throws IOException {
+        while (! s.hasNext(">")) { s.nextLine(); }
+        s.skip("> ");
+        provideInput("2\n");
+        assertEquals("Select a valid option!", s.nextLine());
+    }
+
+    @Test
+    public void testInvalidMenuOption_ReEnterChoice() throws IOException {
+        while (! s.hasNext(">")) { s.nextLine(); }
+        s.skip("> ");
+        provideInput("2\n");
+        s.nextLine();
+        testListOfBooks();
+    }
+
 }

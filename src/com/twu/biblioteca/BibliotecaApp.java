@@ -17,10 +17,16 @@ public class BibliotecaApp {
     public void run() {
         out.println("Welcome to Biblioteca!");
         out.println("1) List books");
-        out.print("> ");
-        assert 1 == in.nextInt();
-        out.println("Real World Haskell | O'Sullivan, Goerzen, and Stuart | 2009");
-        out.println("Java Persistence with Hibernate | Bauer, and King | 2007 ");
+        while(true) {
+            out.print("> ");
+            int menuOption = in.nextInt();
+            if (menuOption == 1) {
+                out.println("Real World Haskell | O'Sullivan, Goerzen, and Stuart | 2009");
+                out.println("Java Persistence with Hibernate | Bauer, and King | 2007 ");
+            } else {
+                out.println("Select a valid option!");
+            }
+        }
     }
 
     public static void main(String[] args) {
