@@ -4,8 +4,7 @@ package com.twu.biblioteca;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
@@ -13,12 +12,31 @@ import static org.junit.Assert.assertEquals;
 public class ExampleTest {
 
     private Scanner s;
+    private Writer w;
 
     @Before
-    public void captureOutput() {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        new BibliotecaApp(new PrintStream(baos)).run();
-        s = new Scanner(baos.toString());
+    public void captureOutput() throws IOException {
+        final PipedOutputStream pipeIn  = new PipedOutputStream();
+        final PipedOutputStream pipeOut = new PipedOutputStream();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    new BibliotecaApp(new PipedInputStream(pipeIn), new PrintStream(pipeOut)).run();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
+
+        w = new OutputStreamWriter(pipeIn);
+        s = new Scanner(new PipedInputStream(pipeOut));
+    }
+
+    private void provideInput(String string) throws IOException {
+        w.write(string);
+        w.flush();
     }
 
     @Test
@@ -27,8 +45,17 @@ public class ExampleTest {
     }
 
     @Test
-    public void testListOfBooks() {
+    public void testMainMenu() {
         s.nextLine();
+        assertEquals("1) List books", s.nextLine());
+        assertEquals(">", s.next(">"));
+    }
+
+    @Test
+    public void testListOfBooks() throws IOException {
+        while (! s.hasNext(">")) { s.nextLine(); }
+        s.skip("> ");
+        provideInput("1\n");
         assertEquals("Real World Haskell | O'Sullivan, Goerzen, and Stuart | 2009", s.nextLine());
         assertEquals("Java Persistence with Hibernate | Bauer, and King | 2007 ", s.nextLine());
     }
