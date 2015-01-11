@@ -46,8 +46,12 @@ public class BibliotecaApp {
                 String name = in.next();
                 in.reset();
                 Book book = findBookByName(name);
-                checkedOutBooks.add(book);
-                out.println("Thank you! Enjoy the book");
+                if (book == null || checkedOutBooks.contains(book)) {
+                    out.println("That book is not available.");
+                } else {
+                    checkedOutBooks.add(book);
+                    out.println("Thank you! Enjoy the book");
+                }
             } else {
                 out.println("Select a valid option!");
             }

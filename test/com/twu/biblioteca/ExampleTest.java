@@ -108,4 +108,30 @@ public class ExampleTest {
         assertEquals("Java Persistence with Hibernate | Bauer, and King | 2007", s.nextLine());
     }
 
+    @Test
+    public void testUnsuccessfulCheckout_BogusBook() throws IOException {
+        while (! s.hasNext(">")) { s.nextLine(); }
+        s.skip("> ");
+        provideInput("2\n");
+        s.useDelimiter(">");
+        s.next("Name of book");
+        s.reset();
+        s.skip("> ");
+        provideInput("Design Patterns\n");
+        assertEquals("That book is not available.", s.nextLine());
+    }
+
+    @Test
+    public void testUnsuccessfulCheckout_CheckedOutBook() throws IOException {
+        testCheckoutBookAndSuccessfulCheckout();
+        s.skip("> ");
+        provideInput("2\n");
+        s.useDelimiter(">");
+        s.next("Name of book");
+        s.reset();
+        s.skip("> ");
+        provideInput("Real World Haskell\n");
+        assertEquals("That book is not available.", s.nextLine());
+    }
+
 }
