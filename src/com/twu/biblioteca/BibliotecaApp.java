@@ -33,11 +33,23 @@ public class BibliotecaApp {
     private void displayMenu() {
         System.out.println("0) Quit");
         System.out.println("1) List books");
+        System.out.println("2) Checkout book");
     }
 
     private void listBooks() {
         for (Book book : biblioteca.availableBooks()) {
             System.out.println(book);
+        }
+    }
+
+    private void checkoutBook() {
+        System.out.print("> ");
+        String bookName = new Scanner(System.in).nextLine();
+        try {
+            biblioteca.checkOutBookByName(bookName);
+            System.out.println("Thank you! Enjoy the book");
+        } catch (NoSuchBook noSuchBook) {
+            System.out.println("That book is not available.");
         }
     }
 
@@ -56,12 +68,13 @@ public class BibliotecaApp {
             case 1:
                 listBooks();
                 break;
+            case 2:
+                checkoutBook();
+                break;
             default:
                 throw new InvalidMenuOption();
         }
     }
-
-
 
     public static void main(String[] args) {
         new BibliotecaApp().run();

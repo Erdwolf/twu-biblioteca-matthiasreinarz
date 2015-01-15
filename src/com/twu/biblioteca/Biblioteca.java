@@ -16,4 +16,21 @@ public class Biblioteca {
         return availableBooks;
     }
 
+    public void checkOutBookByName(String name) throws NoSuchBook {
+        Book book = findBookByName(name);
+        checkOutBook(book);
+    }
+
+    private void checkOutBook(Book book) {
+        availableBooks.remove(book);
+    }
+
+    private Book findBookByName(String name) throws NoSuchBook {
+        for(Book book : availableBooks()) {
+            if(name.equals((book.name()))) {
+                return book;
+            }
+        }
+        throw new NoSuchBook();
+    }
 }
