@@ -12,7 +12,14 @@ public class BibliotecaApp {
         while(true) {
             try {
                 handleUserInput();
-            } catch(Exception e) {
+            }
+            catch (UserQuit userQuit) {
+                return;
+            }
+            catch (InvalidMenuOption invalidMenuOption) {
+                System.out.println("Select a valid option!");
+            }
+            catch(Exception e) {
                 System.out.println(e);
             }
         }
@@ -20,7 +27,12 @@ public class BibliotecaApp {
 
     private void printWelcomeMessage() {
         System.out.println("Welcome to Biblioteca!");
-        listBooks();
+        displayMenu();
+    }
+
+    private void displayMenu() {
+        System.out.println("0) Quit");
+        System.out.println("1) List books");
     }
 
     private void listBooks() {
@@ -29,10 +41,27 @@ public class BibliotecaApp {
         }
     }
 
-    private void handleUserInput() {
+    private void handleUserInput() throws UserQuit, InvalidMenuOption {
         System.out.print("> ");
-        int menuOption = new Scanner(System.in).nextInt();
+
+        Scanner userInput = new Scanner(System.in);
+        if(! userInput.hasNextInt()) {
+            throw new InvalidMenuOption();
+        }
+        int menuOption = userInput.nextInt();
+
+        switch(menuOption){
+            case 0:
+                throw new UserQuit();
+            case 1:
+                listBooks();
+                break;
+            default:
+                throw new InvalidMenuOption();
+        }
     }
+
+
 
     public static void main(String[] args) {
         new BibliotecaApp().run();
