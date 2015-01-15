@@ -63,4 +63,22 @@ public class BibliotecaTest {
         biblioteca.checkOutBookByName("Real World Haskell");
     }
 
+    @Test
+    public void testReturnBook() throws NoSuchBook {
+        biblioteca.checkOutBookByName("Real World Haskell");
+        assertEquals("Number of available books", 1, biblioteca.availableBooks().size());
+        biblioteca.returnBookByName("Real World Haskell");
+        assertEquals("Number of available books", 2, biblioteca.availableBooks().size());
+    }
+
+    @Test(expected = NoSuchBook.class)
+    public void testReturnBook_BogusBook() throws NoSuchBook {
+        biblioteca.returnBookByName("Design Patterns");
+    }
+
+    @Test(expected = NoSuchBook.class)
+    public void testReturnBook_NotCheckedOut() throws NoSuchBook {
+        biblioteca.returnBookByName("Real World Haskell");
+    }
+
 }

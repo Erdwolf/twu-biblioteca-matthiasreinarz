@@ -11,26 +11,43 @@ public class Biblioteca {
         add(new Book("Real World Haskell", "O'Sullivan, Goerzen, and Stuart", 2009));
         add(new Book("Java Persistence with Hibernate", "Bauer, and King", 2007));
     }};
+    private final List<Book> checkedOutBooks = new ArrayList<Book>();
 
     public List<Book> availableBooks() {
         return availableBooks;
     }
 
+    private List<Book> checkedOutBooks() {
+        return checkedOutBooks;
+    }
+
     public void checkOutBookByName(String name) throws NoSuchBook {
-        Book book = findBookByName(name);
+        Book book = findBookByName(name, availableBooks());
         checkOutBook(book);
+    }
+
+    public void returnBookByName(String name) throws NoSuchBook {
+        Book book = findBookByName(name, checkedOutBooks());
+        returnBook(book);
     }
 
     private void checkOutBook(Book book) {
         availableBooks.remove(book);
+        checkedOutBooks.add(book);
     }
 
-    private Book findBookByName(String name) throws NoSuchBook {
-        for(Book book : availableBooks()) {
+    private void returnBook(Book book) {
+        checkedOutBooks.remove(book);
+        availableBooks.add(book);
+    }
+
+    private static Book findBookByName(String name, List<Book> books) throws NoSuchBook {
+        for(Book book : books) {
             if(name.equals((book.name()))) {
                 return book;
             }
         }
         throw new NoSuchBook();
     }
+
 }
