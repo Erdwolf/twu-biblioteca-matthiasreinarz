@@ -22,6 +22,7 @@ public class BibliotecaTest {
     public void testAvailableBooks() {
         List<Book> books = biblioteca.availableBooks();
         assertNotNull("Available books should not be null!", books);
+        assertEquals("Number of available books", 2, books.size());
     }
 
 }
