@@ -36,39 +36,53 @@ public class BibliotecaApp {
             if (menuOption == 0) {
                 done = true;
             } else if (menuOption == 1) {
-                for (Book book : ALL_BOOKS) {
-                    if(! checkedOutBooks.contains(book)) {
-                        out.println(book);
-                    }
-                }
+                listBooks();
             } else if (menuOption == 2) {
-                out.print("Name of book> ");
-                in.useDelimiter("\\n");
-                String name = in.next();
-                in.reset();
-                Book book = findBookByName(name);
-                if (book == null || checkedOutBooks.contains(book)) {
-                    out.println("That book is not available.");
-                } else {
-                    checkedOutBooks.add(book);
-                    out.println("Thank you! Enjoy the book");
-                }
+                checkOutBook();
             } else if (menuOption == 3) {
-                out.print("Name of book> ");
-                in.useDelimiter("\\n");
-                String name = in.next();
-                in.reset();
-                Book book = findBookByName(name);
-                if (book == null || ! checkedOutBooks.contains(book)) {
-                    out.println("That is not a valid book to return.");
-                } else {
-                    checkedOutBooks.remove(book);
-                    out.println("Thank you for returning the book.");
-                }
+                returnBook();
             } else {
                 out.println("Select a valid option!");
             }
         }
+    }
+
+    private void returnBook() {
+        String name = getBookName();
+        Book book = findBookByName(name);
+        if (book == null || ! checkedOutBooks.contains(book)) {
+            out.println("That is not a valid book to return.");
+        } else {
+            checkedOutBooks.remove(book);
+            out.println("Thank you for returning the book.");
+        }
+    }
+
+    private void checkOutBook() {
+        String name = getBookName();
+        Book book = findBookByName(name);
+        if (book == null || checkedOutBooks.contains(book)) {
+            out.println("That book is not available.");
+        } else {
+            checkedOutBooks.add(book);
+            out.println("Thank you! Enjoy the book");
+        }
+    }
+
+    private void listBooks() {
+        for (Book book : ALL_BOOKS) {
+            if(! checkedOutBooks.contains(book)) {
+                out.println(book);
+            }
+        }
+    }
+
+    private String getBookName() {
+        out.print("Name of book> ");
+        in.useDelimiter("\\n");
+        String name = in.next();
+        in.reset();
+        return name;
     }
 
     private Book findBookByName(String name) {
