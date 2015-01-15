@@ -77,7 +77,9 @@ public class BibliotecaApp {
         Book book = findBookByName(name);
         if (book == null || ! checkedOutBooks.contains(book)) {
             out.println("That is not a valid book to return.");
-        } else {
+            return;
+        }
+        if(checkCredentials()) {
             checkedOutBooks.remove(book);
             out.println("Thank you for returning the book.");
         }
@@ -88,10 +90,32 @@ public class BibliotecaApp {
         Book book = findBookByName(name);
         if (book == null || checkedOutBooks.contains(book)) {
             out.println("That book is not available.");
-        } else {
+            return;
+        }
+        if (checkCredentials()) {
             checkedOutBooks.add(book);
             out.println("Thank you! Enjoy the book");
         }
+    }
+
+    private boolean checkCredentials() {
+        out.print("Library number> ");
+        in.useDelimiter("\\n");
+        String libraryNumber = in.next();
+        in.reset();
+        if(! "555-1234".equals(libraryNumber)) {
+            out.println("Login failure: Unknown library number.");
+            return false;
+        }
+        in.useDelimiter("\\n");
+        out.print("Password> ");
+        String password = in.next();
+        in.reset();
+        if(! "1234".equals(password)) {
+            out.println("Login failure: Wrong password.");
+            return false;
+        }
+        return true;
     }
 
     private void listBooks() {

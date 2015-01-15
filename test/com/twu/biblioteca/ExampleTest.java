@@ -42,10 +42,23 @@ public class ExampleTest {
         w.flush();
     }
 
+    private void checkPrompt(String what) {
+        s.useDelimiter(">");
+        s.next(what);
+        s.reset();
+        s.skip("> ");
+    }
+
+    private void checkBookPrompt() {
+        checkPrompt("Name of book");
+    }
+
+
     @Test
     public void testWelcomeMessage() {
         assertEquals("Welcome to Biblioteca!", s.nextLine());
     }
+
 
     @Test
     public void testMainMenu() {
@@ -56,6 +69,7 @@ public class ExampleTest {
         assertEquals("3) Return book", s.nextLine());
         assertEquals("4) List movies", s.nextLine());
         assertEquals("5) Checkout movie", s.nextLine());
+        assertEquals("6) User information", s.nextLine());
         assertEquals(">", s.next(">"));
     }
 
@@ -100,11 +114,12 @@ public class ExampleTest {
         while (! s.hasNext(">")) { s.nextLine(); }
         s.skip("> ");
         provideInput("2\n");
-        s.useDelimiter(">");
-        s.next("Name of book");
-        s.reset();
-        s.skip("> ");
+        checkBookPrompt();
         provideInput("Real World Haskell\n");
+        checkPrompt("Library number");
+        provideInput("555-1234\n");
+        checkPrompt("Password");
+        provideInput("1234\n");
         assertEquals("Thank you! Enjoy the book", s.nextLine());
         s.skip("> ");
         provideInput("1\n");
@@ -112,14 +127,38 @@ public class ExampleTest {
     }
 
     @Test
+    public void testCheckoutBookUnsuccessfulCheckout_Login_WrongLibraryNumber() throws IOException {
+        while (! s.hasNext(">")) { s.nextLine(); }
+        s.skip("> ");
+        provideInput("2\n");
+        checkBookPrompt();
+        provideInput("Real World Haskell\n");
+        checkPrompt("Library number");
+        provideInput("555-0000\n");
+        assertEquals("Login failure: Unknown library number.", s.nextLine());
+    }
+
+    @Test
+    public void testCheckoutBookUnsuccessfulCheckout_Login_WrongPassword() throws IOException {
+        while (! s.hasNext(">")) { s.nextLine(); }
+        s.skip("> ");
+        provideInput("2\n");
+        checkBookPrompt();
+        provideInput("Real World Haskell\n");
+        checkPrompt("Library number");
+        provideInput("555-1234\n");
+        checkPrompt("Password");
+        provideInput("qwerty\n");
+        assertEquals("Login failure: Wrong password.", s.nextLine());
+    }
+
+
+    @Test
     public void testUnsuccessfulCheckout_BogusBook() throws IOException {
         while (! s.hasNext(">")) { s.nextLine(); }
         s.skip("> ");
         provideInput("2\n");
-        s.useDelimiter(">");
-        s.next("Name of book");
-        s.reset();
-        s.skip("> ");
+        checkBookPrompt();
         provideInput("Design Patterns\n");
         assertEquals("That book is not available.", s.nextLine());
     }
@@ -129,10 +168,7 @@ public class ExampleTest {
         testCheckoutBookAndSuccessfulCheckout();
         s.skip("> ");
         provideInput("2\n");
-        s.useDelimiter(">");
-        s.next("Name of book");
-        s.reset();
-        s.skip("> ");
+        checkBookPrompt();
         provideInput("Real World Haskell\n");
         assertEquals("That book is not available.", s.nextLine());
     }
@@ -142,11 +178,12 @@ public class ExampleTest {
         testCheckoutBookAndSuccessfulCheckout();
         s.skip("> ");
         provideInput("3\n");
-        s.useDelimiter(">");
-        s.next("Name of book");
-        s.reset();
-        s.skip("> ");
+        checkBookPrompt();
         provideInput("Real World Haskell\n");
+        checkPrompt("Library number");
+        provideInput("555-1234\n");
+        checkPrompt("Password");
+        provideInput("1234\n");
         assertEquals("Thank you for returning the book.", s.nextLine());
         s.skip("> ");
         provideInput("1\n");
@@ -155,14 +192,37 @@ public class ExampleTest {
     }
 
     @Test
+    public void testUnsuccessfulReturn_Login_WrongLibraryNumber() throws IOException {
+        testCheckoutBookAndSuccessfulCheckout();
+        s.skip("> ");
+        provideInput("3\n");
+        checkBookPrompt();
+        provideInput("Real World Haskell\n");
+        checkPrompt("Library number");
+        provideInput("555-0000\n");
+        assertEquals("Login failure: Unknown library number.", s.nextLine());
+    }
+
+    @Test
+    public void testUnsuccessfulReturn_Login_WrongPassword() throws IOException {
+        testCheckoutBookAndSuccessfulCheckout();
+        s.skip("> ");
+        provideInput("3\n");
+        checkBookPrompt();
+        provideInput("Real World Haskell\n");
+        checkPrompt("Library number");
+        provideInput("555-1234\n");
+        checkPrompt("Password");
+        provideInput("qwerty\n");
+        assertEquals("Login failure: Wrong password.", s.nextLine());
+    }
+
+    @Test
     public void testUnsuccessfulReturn_BogusBook() throws IOException {
         while (! s.hasNext(">")) { s.nextLine(); }
         s.skip("> ");
         provideInput("3\n");
-        s.useDelimiter(">");
-        s.next("Name of book");
-        s.reset();
-        s.skip("> ");
+        checkBookPrompt();
         provideInput("Design Patterns\n");
         assertEquals("That is not a valid book to return.", s.nextLine());
     }
@@ -172,10 +232,7 @@ public class ExampleTest {
         while (! s.hasNext(">")) { s.nextLine(); }
         s.skip("> ");
         provideInput("3\n");
-        s.useDelimiter(">");
-        s.next("Name of book");
-        s.reset();
-        s.skip("> ");
+        checkBookPrompt();
         provideInput("Real World Haskell\n");
         assertEquals("That is not a valid book to return.", s.nextLine());
     }
@@ -196,10 +253,7 @@ public class ExampleTest {
         while (! s.hasNext(">")) { s.nextLine(); }
         s.skip("> ");
         provideInput("5\n");
-        s.useDelimiter(">");
-        s.next("Name of movie");
-        s.reset();
-        s.skip("> ");
+        checkPrompt("Name of movie");
         provideInput("Hotel\n");
     }
 }
