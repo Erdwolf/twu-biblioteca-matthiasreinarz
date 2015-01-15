@@ -7,11 +7,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
+import static org.junit.Assert.assertEquals;
+
 public class BibliotecaApp {
 
     private static final List<Book> ALL_BOOKS = new ArrayList() {{
         add(new Book("Real World Haskell", "O'Sullivan, Goerzen, and Stuart", 2009));
         add(new Book("Java Persistence with Hibernate", "Bauer, and King", 2007));
+    }};
+
+    private static final List<String> ALL_MOVIES = new ArrayList() {{
+        add("Groundhog Day | 1993 | Harold Ramis | 10");
+        add("Hotel | 2004 | Jessica Hausner | 1");
+        add("The Hobbit: The Battle of the Five Armies | 2014 | Peter Jackson | unrated");
     }};
 
     private Scanner in;
@@ -29,6 +37,7 @@ public class BibliotecaApp {
         out.println("1) List books");
         out.println("2) Checkout book");
         out.println("3) Return book");
+        out.println("4) List movies");
         boolean done = false;
         while(! done) {
             out.print("> ");
@@ -41,9 +50,17 @@ public class BibliotecaApp {
                 checkOutBook();
             } else if (menuOption == 3) {
                 returnBook();
+            } else if (menuOption == 4) {
+                listMovies();
             } else {
                 out.println("Select a valid option!");
             }
+        }
+    }
+
+    private void listMovies() {
+        for (String movie : ALL_MOVIES) {
+            out.println(movie);
         }
     }
 
