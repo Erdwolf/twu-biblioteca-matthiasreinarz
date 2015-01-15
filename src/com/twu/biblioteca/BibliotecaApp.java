@@ -39,6 +39,7 @@ public class BibliotecaApp {
         out.println("3) Return book");
         out.println("4) List movies");
         out.println("5) Checkout movie");
+        out.println("6) User information");
         boolean done = false;
         while(! done) {
             out.print("> ");
@@ -55,9 +56,17 @@ public class BibliotecaApp {
                 listMovies();
             } else if (menuOption == 5) {
                 checkOutMovie();
+            } else if (menuOption == 6) {
+                userInformation();
             } else {
                 out.println("Select a valid option!");
             }
+        }
+    }
+
+    private void userInformation() {
+        if(checkCredentials()) {
+            out.println("Matthias Reinarz | mreinarz@thoughtworks.com | +44");
         }
     }
 

@@ -256,4 +256,38 @@ public class ExampleTest {
         checkPrompt("Name of movie");
         provideInput("Hotel\n");
     }
+
+    @Test
+    public void testUserInformation_Success() throws IOException {
+        while (! s.hasNext(">")) { s.nextLine(); }
+        s.skip("> ");
+        provideInput("6\n");
+        checkPrompt("Library number");
+        provideInput("555-1234\n");
+        checkPrompt("Password");
+        provideInput("1234\n");
+        assertEquals("Matthias Reinarz | mreinarz@thoughtworks.com | +44", s.nextLine());
+    }
+
+    @Test
+    public void testUserInformation_WrongLibraryNumber() throws IOException {
+        while (!s.hasNext(">")) { s.nextLine(); }
+        s.skip("> ");
+        provideInput("6\n");
+        checkPrompt("Library number");
+        provideInput("555-0000\n");
+        assertEquals("Login failure: Unknown library number.", s.nextLine());
+    }
+
+    @Test
+    public void testUserInformation_WrongPassword() throws IOException {
+        while (! s.hasNext(">")) { s.nextLine(); }
+        s.skip("> ");
+        provideInput("6\n");
+        checkPrompt("Library number");
+        provideInput("555-1234\n");
+        checkPrompt("Password");
+        provideInput("qwerty\n");
+        assertEquals("Login failure: Wrong password.", s.nextLine());
+    }
 }
