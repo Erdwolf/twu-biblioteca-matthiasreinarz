@@ -21,8 +21,20 @@ public class BibliotecaTest {
     @Test
     public void testAvailableBooks() {
         List<Book> books = biblioteca.availableBooks();
+
         assertNotNull("Available books should not be null!", books);
+
         assertEquals("Number of available books", 2, books.size());
+
+        assertNotNull("Book should not be null!", books.get(0));
+        assertEquals("Real World Haskell", books.get(0).name());
+        assertEquals("O'Sullivan, Goerzen, and Stuart", books.get(0).authors());
+        assertEquals(2009, books.get(0).yearPublished());
+
+        assertNotNull("Book should not be null!", books.get(1));
+        assertEquals("Java Persistence with Hibernate", books.get(1).name());
+        assertEquals("Bauer, and King", books.get(1).authors());
+        assertEquals(2007, books.get(1).yearPublished());
     }
 
 }
