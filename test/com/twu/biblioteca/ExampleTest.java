@@ -55,6 +55,7 @@ public class ExampleTest {
         assertEquals("2) Checkout book", s.nextLine());
         assertEquals("3) Return book", s.nextLine());
         assertEquals("4) List movies", s.nextLine());
+        assertEquals("5) Checkout movie", s.nextLine());
         assertEquals(">", s.next(">"));
     }
 
@@ -188,5 +189,17 @@ public class ExampleTest {
         assertEquals("Groundhog Day | 1993 | Harold Ramis | 10", s.nextLine());
         assertEquals("Hotel | 2004 | Jessica Hausner | 1", s.nextLine());
         assertEquals("The Hobbit: The Battle of the Five Armies | 2014 | Peter Jackson | unrated", s.nextLine());
+    }
+
+    @Test
+    public void testCheckoutMovie() throws IOException {
+        while (! s.hasNext(">")) { s.nextLine(); }
+        s.skip("> ");
+        provideInput("5\n");
+        s.useDelimiter(">");
+        s.next("Name of movie");
+        s.reset();
+        s.skip("> ");
+        provideInput("Hotel\n");
     }
 }

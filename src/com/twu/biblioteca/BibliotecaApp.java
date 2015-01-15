@@ -38,6 +38,7 @@ public class BibliotecaApp {
         out.println("2) Checkout book");
         out.println("3) Return book");
         out.println("4) List movies");
+        out.println("5) Checkout movie");
         boolean done = false;
         while(! done) {
             out.print("> ");
@@ -52,10 +53,17 @@ public class BibliotecaApp {
                 returnBook();
             } else if (menuOption == 4) {
                 listMovies();
+            } else if (menuOption == 5) {
+                checkOutMovie();
             } else {
                 out.println("Select a valid option!");
             }
         }
+    }
+
+    private void checkOutMovie() {
+        String name = getName("movie");
+        // Nothing to be done with it so far
     }
 
     private void listMovies() {
@@ -65,7 +73,7 @@ public class BibliotecaApp {
     }
 
     private void returnBook() {
-        String name = getBookName();
+        String name = getName("book");
         Book book = findBookByName(name);
         if (book == null || ! checkedOutBooks.contains(book)) {
             out.println("That is not a valid book to return.");
@@ -76,7 +84,7 @@ public class BibliotecaApp {
     }
 
     private void checkOutBook() {
-        String name = getBookName();
+        String name = getName("book");
         Book book = findBookByName(name);
         if (book == null || checkedOutBooks.contains(book)) {
             out.println("That book is not available.");
@@ -94,8 +102,8 @@ public class BibliotecaApp {
         }
     }
 
-    private String getBookName() {
-        out.print("Name of book> ");
+    private String getName(String thing) {
+        out.print("Name of "+thing+"> ");
         in.useDelimiter("\\n");
         String name = in.next();
         in.reset();
