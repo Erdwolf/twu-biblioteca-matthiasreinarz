@@ -14,7 +14,7 @@ public class BibliotecaWithLogin extends Biblioteca {
         }
     }};
 
-    boolean loggedIn = false;
+    private boolean loggedIn = false;
 
     public void login(Credentials credentials) throws LoginFailed {
         if(credentials == null || ! VALID_CREDENTIALS.contains(credentials)) {

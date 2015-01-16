@@ -19,6 +19,9 @@ public class BibliotecaApp {
             catch (InvalidMenuOption invalidMenuOption) {
                 System.out.println("Select a valid option!");
             }
+            catch (LoginRequired loginRequired) {
+                login();
+            }
             catch(Exception e) {
                 System.out.println(e);
             }
@@ -38,6 +41,26 @@ public class BibliotecaApp {
         System.out.println("4) List movies");
         System.out.println("5) Checkout movie");
         System.out.println("6) Return movie");
+    }
+
+    private void login() {
+        System.out.println("Login required:");
+        try {
+            System.out.print("Library number> ");
+            LibraryNumber libraryNumber = LibraryNumber.parse(new Scanner(System.in).nextLine());
+            System.out.print("Password> ");
+            String password = new Scanner(System.in).nextLine();
+            biblioteca.login(new Credentials(libraryNumber, password));
+        }
+        catch (LibraryNumber.InvalidFormat invalidFormat) {
+            System.out.println("That is not a valid library number! Library numbers have the format xxx-xxxx.");
+            return;
+        }
+        catch (LoginFailed loginFailed) {
+            System.out.println("Login failed!");
+            return;
+        }
+        System.out.println("Login successful.2");
     }
 
     private void listBooks() {
