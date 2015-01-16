@@ -36,6 +36,8 @@ public class BibliotecaApp {
         System.out.println("2) Checkout book");
         System.out.println("3) Return book");
         System.out.println("4) List movies");
+        System.out.println("5) Checkout movie");
+        System.out.println("6) Return movie");
     }
 
     private void listBooks() {
@@ -72,6 +74,28 @@ public class BibliotecaApp {
         }
     }
 
+    private void checkoutMovie() {
+        System.out.print("Name of the movie> ");
+        String bookName = new Scanner(System.in).nextLine();
+        try {
+            biblioteca.checkOutMovieByName(bookName);
+            System.out.println("Thank you! Enjoy the movie");
+        } catch (NoSuchMovie noSuchMovie) {
+            System.out.println("That movie is not available.");
+        }
+    }
+
+    private void returnMovie() {
+        System.out.print("Name of the movie> ");
+        String movieName = new Scanner(System.in).nextLine();
+        try {
+            biblioteca.returnMovieByName(movieName);
+            System.out.println("Thank you for returning the movie.");
+        } catch (NoSuchMovie noSuchMovie) {
+            System.out.println("That is not a valid movie to return.");
+        }
+    }
+
     private void handleUserInput() throws UserQuit, InvalidMenuOption {
         System.out.print("> ");
 
@@ -95,6 +119,12 @@ public class BibliotecaApp {
                 break;
             case 4:
                 listMovies();
+                break;
+            case 5:
+                checkoutMovie();
+                break;
+            case 6:
+                returnMovie();
                 break;
             default:
                 throw new InvalidMenuOption();
