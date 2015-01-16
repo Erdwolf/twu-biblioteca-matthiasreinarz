@@ -59,4 +59,23 @@ public class Biblioteca {
     public List<Movie> availableMovies() {
         return availableMovies;
     }
+
+    public void checkOutMovieByName(String name) throws NoSuchMovie {
+        Movie movie = findMovieByName(name);
+        checkOutMovie(movie);
+    }
+
+    private Movie findMovieByName(String name) throws NoSuchMovie {
+        for(Movie movie : availableMovies) {
+            if(name.equals(movie.name())) {
+                return movie;
+            }
+        }
+        throw new NoSuchMovie();
+    }
+
+    private void checkOutMovie(Movie movie) {
+        availableMovies.remove(movie);
+    }
+
 }

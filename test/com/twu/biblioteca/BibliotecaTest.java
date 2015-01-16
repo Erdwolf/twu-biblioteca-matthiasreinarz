@@ -107,4 +107,35 @@ public class BibliotecaTest {
         assertEquals(Rating.unrated, movies.get(2).rating());
     }
 
+
+    @Test
+    public void testCheckOutMovie() throws NoSuchMovie {
+        biblioteca.checkOutMovieByName("Groundhog Day");
+
+        List<Movie> movies = biblioteca.availableMovies();
+        assertEquals("Number of available movies", 2, movies.size());
+
+        assertNotNull("Movie should not be null!", movies.get(0));
+        assertNotNull("Movie should not be null!", movies.get(1));
+        assertEquals("Hotel", movies.get(0).name());
+        assertEquals("The Hobbit: The Battle of the Five Armies", movies.get(1).name());
+        assertEquals(2004, movies.get(0).year());
+        assertEquals(2014, movies.get(1).year());
+        assertEquals("Jessica Hausner", movies.get(0).director());
+        assertEquals("Peter Jackson", movies.get(1).director());
+        assertEquals(Rating.worst, movies.get(0).rating());
+        assertEquals(Rating.unrated, movies.get(1).rating());
+    }
+
+    @Test(expected = NoSuchMovie.class)
+    public void testCheckOutMovie_BogusMovie() throws NoSuchMovie {
+        biblioteca.checkOutMovieByName("Bill & Ted's Excellent Adventure");
+    }
+
+    @Test(expected = NoSuchMovie.class)
+    public void testCheckOutMovie_AlreadyCheckedOut() throws NoSuchMovie {
+        biblioteca.checkOutMovieByName("Groundhog Day");
+        biblioteca.checkOutMovieByName("Groundhog Day");
+    }
+
 }
