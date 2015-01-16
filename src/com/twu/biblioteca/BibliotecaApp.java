@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class BibliotecaApp {
 
-    private Biblioteca biblioteca = new Biblioteca();
+    private BibliotecaWithLogin biblioteca = new BibliotecaWithLogin();
 
     private void run() {
         printWelcomeMessage();
