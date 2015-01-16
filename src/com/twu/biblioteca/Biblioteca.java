@@ -27,7 +27,7 @@ public class Biblioteca {
         return checkedOutBooks;
     }
 
-    public void checkOutBookByName(String name) throws NoSuchBook {
+    public void checkOutBookByName(String name) throws NoSuchBook, LoginRequired {
         Book book = findBookByName(name, availableBooks());
         checkOutBook(book);
     }
