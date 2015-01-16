@@ -81,4 +81,30 @@ public class BibliotecaTest {
         biblioteca.returnBookByName("Real World Haskell");
     }
 
+
+    @Test
+    public void testAvailableMovies() {
+        List<Movie> movies = biblioteca.availableMovies();
+
+        assertNotNull("Available movies should not be null!", movies);
+
+        assertEquals("Number of available movies", 3, movies.size());
+
+        assertNotNull("Movie should not be null!", movies.get(0));
+        assertNotNull("Movie should not be null!", movies.get(1));
+        assertNotNull("Movie should not be null!", movies.get(2));
+        assertEquals("Groundhog Day", movies.get(0).name());
+        assertEquals("Hotel", movies.get(1).name());
+        assertEquals("The Hobbit: The Battle of the Five Armies", movies.get(2).name());
+        assertEquals(1993, movies.get(0).year());
+        assertEquals(2004, movies.get(1).year());
+        assertEquals(2014, movies.get(2).year());
+        assertEquals("Harold Ramis", movies.get(0).director());
+        assertEquals("Jessica Hausner", movies.get(1).director());
+        assertEquals("Peter Jackson", movies.get(2).director());
+        assertEquals(Rating.best, movies.get(0).rating());
+        assertEquals(Rating.worst, movies.get(1).rating());
+        assertEquals(Rating.unrated, movies.get(2).rating());
+    }
+
 }

@@ -13,6 +13,12 @@ public class Biblioteca {
     }};
     private final List<Book> checkedOutBooks = new ArrayList<Book>();
 
+    private List<Movie> availableMovies = new ArrayList<Movie>() {{
+        add(new Movie("Groundhog Day", 1993, "Harold Ramis", Rating.best));
+        add(new Movie("Hotel", 2004, "Jessica Hausner", Rating.worst));
+        add(new Movie("The Hobbit: The Battle of the Five Armies", 2014, "Peter Jackson", Rating.unrated));
+    }};;
+
     public List<Book> availableBooks() {
         return availableBooks;
     }
@@ -50,4 +56,7 @@ public class Biblioteca {
         throw new NoSuchBook();
     }
 
+    public List<Movie> availableMovies() {
+        return availableMovies;
+    }
 }
