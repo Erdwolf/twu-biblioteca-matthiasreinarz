@@ -18,9 +18,25 @@ public class BibliotecaWithLoginTest {
     }
 
     @Test
-    public void testLogin() {
+    public void testLogin_Success() throws LoginFailed {
         biblioteca.login(credentials);
     }
+
+    @Test(expected = LoginFailed.class)
+    public void testLogin_Failure_NullCredentials() throws LoginFailed {
+        biblioteca.login(null);
+    }
+
+    @Test(expected = LoginFailed.class)
+    public void testLogin_Failure_InvalidCredentials() throws LoginFailed {
+        biblioteca.login(new Credentials(null, null));
+    }
+
+    @Test(expected = LoginFailed.class)
+    public void testLogin_Failure_WrongPassword() throws LoginFailed, LibraryNumber.InvalidFormat {
+        biblioteca.login(new Credentials(LibraryNumber.parse("555-1234"), "1324"));
+    }
+
 
     @Test(expected = LoginRequired.class)
     public void checkoutBookWithLogin_LoginRequired() throws NoSuchBook {
@@ -28,7 +44,7 @@ public class BibliotecaWithLoginTest {
     }
 
     @Test
-    public void checkoutBookWithLogin() throws NoSuchBook {
+    public void checkoutBookWithLogin() throws NoSuchBook, LoginFailed {
         biblioteca.login(credentials);
         biblioteca.checkOutBookByName("Real World Haskell");
         assertEquals("Number of available books", 1, biblioteca.availableBooks().size());
@@ -40,7 +56,7 @@ public class BibliotecaWithLoginTest {
     }
 
     @Test
-    public void returnBookWithLogin() throws NoSuchBook {
+    public void returnBookWithLogin() throws NoSuchBook, LoginFailed {
         biblioteca.login(credentials);
         biblioteca.checkOutBookByName("Real World Haskell");
         assertEquals("Number of available books", 1, biblioteca.availableBooks().size());
