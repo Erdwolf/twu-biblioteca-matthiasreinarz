@@ -40,4 +40,8 @@ public class BibliotecaWithLogin extends Biblioteca {
             throw new LoginRequired();
         }
     }
+
+    public UserInfo userInformation() {
+        return new UserInfo("Matthias Reinarz", "mreinarz@thoughtworks.com", "+44");
+    }
 }

@@ -41,6 +41,7 @@ public class BibliotecaApp {
         System.out.println("4) List movies");
         System.out.println("5) Checkout movie");
         System.out.println("6) Return movie");
+        System.out.println("7) User Information");
     }
 
     private void login() {
@@ -119,6 +120,10 @@ public class BibliotecaApp {
         }
     }
 
+    private void userInformation() {
+        System.out.println(biblioteca.userInformation());
+    }
+
     private void handleUserInput() throws UserQuit, InvalidMenuOption {
         System.out.print("> ");
 
@@ -148,6 +153,9 @@ public class BibliotecaApp {
                 break;
             case 6:
                 returnMovie();
+                break;
+            case 7:
+                userInformation();
                 break;
             default:
                 throw new InvalidMenuOption();

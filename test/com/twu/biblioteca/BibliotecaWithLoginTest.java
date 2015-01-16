@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class BibliotecaWithLoginTest {
 
@@ -62,6 +63,16 @@ public class BibliotecaWithLoginTest {
         assertEquals("Number of available books", 1, biblioteca.availableBooks().size());
         biblioteca.returnBookByName("Real World Haskell");
         assertEquals("Number of available books", 2, biblioteca.availableBooks().size());
+    }
+
+    @Test
+    public void testUserInformation() throws LoginFailed {
+        biblioteca.login(credentials);
+        UserInfo userInfo = biblioteca.userInformation();
+        assertNotNull("User information should not be null!", userInfo);
+        assertEquals("Matthias Reinarz", userInfo.name());
+        assertEquals("mreinarz@thoughtworks.com", userInfo.emailAddress());
+        assertEquals("+44", userInfo.phoneNumber());
     }
 
 }
