@@ -65,6 +65,11 @@ public class BibliotecaWithLoginTest {
         assertEquals("Number of available books", 2, biblioteca.availableBooks().size());
     }
 
+    @Test(expected = LoginRequired.class)
+    public void testUserInformation_LoginRequired() throws LoginRequired {
+        UserInfo userInfo = biblioteca.userInformation();
+    }
+
     @Test
     public void testUserInformation() throws LoginFailed {
         biblioteca.login(credentials);

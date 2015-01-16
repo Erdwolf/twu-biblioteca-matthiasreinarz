@@ -54,6 +54,7 @@ public class BibliotecaWithLogin extends Biblioteca {
     }
 
     public UserInfo userInformation() {
+        requireLogin();
         return USER_INFO.get(loggedInLibraryNumber);
     }
 }
