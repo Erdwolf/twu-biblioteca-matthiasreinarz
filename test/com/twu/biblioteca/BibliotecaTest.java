@@ -138,4 +138,23 @@ public class BibliotecaTest {
         biblioteca.checkOutMovieByName("Groundhog Day");
     }
 
+    @Test
+    public void testReturnMovie() throws NoSuchMovie {
+        biblioteca.checkOutMovieByName("Groundhog Day");
+        assertEquals("Number of available movies", 2, biblioteca.availableMovies().size());
+        biblioteca.returnMovieByName("Groundhog Day");
+        assertEquals("Number of available movies", 3, biblioteca.availableMovies().size());
+    }
+
+    @Test(expected = NoSuchMovie.class)
+    public void testReturnMovie_BogusMovie() throws NoSuchMovie {
+        biblioteca.returnMovieByName("Bill & Ted's Excellent Adventure");
+    }
+
+    @Test(expected = NoSuchMovie.class)
+    public void testReturnMovie_NotCheckedOut() throws NoSuchMovie {
+        biblioteca.returnMovieByName("Groundhog Day");
+    }
+
+
 }

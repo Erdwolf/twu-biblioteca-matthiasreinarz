@@ -1,7 +1,6 @@
 package com.twu.biblioteca;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -18,6 +17,7 @@ public class Biblioteca {
         add(new Movie("Hotel", 2004, "Jessica Hausner", Rating.worst));
         add(new Movie("The Hobbit: The Battle of the Five Armies", 2014, "Peter Jackson", Rating.unrated));
     }};;
+    private List<Movie> checkedOutMovies = new ArrayList<Movie>();
 
     public List<Book> availableBooks() {
         return availableBooks;
@@ -61,12 +61,12 @@ public class Biblioteca {
     }
 
     public void checkOutMovieByName(String name) throws NoSuchMovie {
-        Movie movie = findMovieByName(name);
+        Movie movie = findMovieByName(name, availableMovies);
         checkOutMovie(movie);
     }
 
-    private Movie findMovieByName(String name) throws NoSuchMovie {
-        for(Movie movie : availableMovies) {
+    private Movie findMovieByName(String name, List<Movie> movies) throws NoSuchMovie {
+        for(Movie movie : movies) {
             if(name.equals(movie.name())) {
                 return movie;
             }
@@ -76,6 +76,16 @@ public class Biblioteca {
 
     private void checkOutMovie(Movie movie) {
         availableMovies.remove(movie);
+        checkedOutMovies.add(movie);
     }
 
+    public void returnMovieByName(String name) throws NoSuchMovie {
+        Movie movie = findMovieByName(name, checkedOutMovies);
+        returnMovie(movie);
+    }
+
+    private void returnMovie(Movie movie) {
+        checkedOutMovies.remove(movie);
+        availableMovies.add(movie);
+    }
 }
