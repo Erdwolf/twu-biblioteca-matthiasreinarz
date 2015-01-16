@@ -6,18 +6,17 @@ import org.junit.Test;
 
 public class BibliotecaWithLoginTest {
 
-    private static final Credentials CREDENTIALS = new Credentials(LibraryNumber.parse("555-1234"), "1234");
-    private static final String password = "1234";
-
     private BibliotecaWithLogin biblioteca;
+    private Credentials credentials;
 
     @Before
-    public void setUp() {
+    public void setUp() throws LibraryNumber.InvalidFormat {
         biblioteca = new BibliotecaWithLogin();
+        credentials = new Credentials(LibraryNumber.parse("555-1234"), "1234");
     }
 
     @Test
     public void testLogin() {
-        biblioteca.login(CREDENTIALS);
+        biblioteca.login(credentials);
     }
 }
