@@ -40,24 +40,24 @@ public class BibliotecaWithLoginTest {
 
 
     @Test(expected = LoginRequired.class)
-    public void checkoutBookWithLogin_LoginRequired() throws NoSuchBook {
+    public void testCheckoutBookWithLogin_LoginRequired() throws NoSuchBook {
         biblioteca.checkOutBookByName("Does it matter?");
     }
 
     @Test
-    public void checkoutBookWithLogin() throws NoSuchBook, LoginFailed {
+    public void testCheckoutBookWithLogin() throws NoSuchBook, LoginFailed {
         biblioteca.login(credentials);
         biblioteca.checkOutBookByName("Real World Haskell");
         assertEquals("Number of available books", 1, biblioteca.availableBooks().size());
     }
 
     @Test(expected = LoginRequired.class)
-    public void returnBookWithLogin_LoginRequired() throws NoSuchBook {
+    public void testReturnBookWithLogin_LoginRequired() throws NoSuchBook {
         biblioteca.returnBookByName("Does it matter?");
     }
 
     @Test
-    public void returnBookWithLogin() throws NoSuchBook, LoginFailed {
+    public void testReturnBookWithLogin() throws NoSuchBook, LoginFailed {
         biblioteca.login(credentials);
         biblioteca.checkOutBookByName("Real World Haskell");
         assertEquals("Number of available books", 1, biblioteca.availableBooks().size());
