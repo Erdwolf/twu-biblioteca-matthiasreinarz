@@ -75,4 +75,14 @@ public class BibliotecaWithLoginTest {
         assertEquals("+44", userInfo.phoneNumber());
     }
 
+    @Test
+    public void testUserInformation_DifferentUser() throws LoginFailed, LibraryNumber.InvalidFormat {
+        biblioteca.login(new Credentials(LibraryNumber.parse("666-ABCD"), "fish"));
+        UserInfo userInfo = biblioteca.userInformation();
+        assertNotNull("User information should not be null!", userInfo);
+        assertEquals("Max Mustermann", userInfo.name());
+        assertEquals("max.mustermann@example.com", userInfo.emailAddress());
+        assertEquals("+445551234", userInfo.phoneNumber());
+    }
+
 }

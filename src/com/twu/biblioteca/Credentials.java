@@ -11,6 +11,10 @@ public class Credentials {
         this.password = password;
     }
 
+    public LibraryNumber libraryNumber() {
+        return libraryNumber;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -31,4 +35,5 @@ public class Credentials {
         result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
     }
+
 }
